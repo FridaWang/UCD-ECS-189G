@@ -12,7 +12,6 @@ States = collections.defaultdict(lambda: 0)
 Voc = collections.defaultdict(lambda: 0)
 
 filename = sys.argv[1]
-
 f = open(filename)
 
 for line in f:
