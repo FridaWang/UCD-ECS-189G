@@ -15,7 +15,6 @@ filename = sys.argv[1]
 
 f = open(filename)
 
-#count = 0
 for line in f:
 	
 	words = line.split()
@@ -60,9 +59,14 @@ for line in sys.stdin:
 		for curTag in States.keys():
 			for preTag_2 in States.keys():
 				for preTag_1 in States.keys():
-					if (preTag_1, preTag_2, curTag) in transition and (curTag,wordList[k]) in emission and (k-1, preTag_1, preTag_2) in Pi:
-						pi = Pi[k-1, preTag_1, preTag_2] + transition[preTag_1, preTag_2, curTag] + emission[curTag, wordList[k]]
-						if (k, preTag_2, curTag) not in Pi or (pi > Pi[k, preTag_2, curTag]):
+					if (preTag_1, preTag_2, curTag) in transition \
+					and (curTag, wordList[k]) in emission \
+					and (k-1, preTag_1, preTag_2) in Pi:
+						pi = Pi[k-1, preTag_1, preTag_2] + \
+						transition[preTag_1, preTag_2, curTag] + \
+						emission[curTag, wordList[k]]
+						if (k, preTag_2, curTag) not in Pi \
+						or (pi > Pi[k, preTag_2, curTag]):
 							Pi[k, preTag_2, curTag] = pi
 							Backtrace[k, preTag_2, curTag] = preTag_1
 
@@ -72,8 +76,10 @@ for line in sys.stdin:
 	pre2 = ""
 	for preTag_1 in States.keys():
 		for preTag_2 in States.keys():
-			if (preTag_1, preTag_2, final_state) in transition and (n+1, preTag_1, preTag_2) in Pi:
-				pi = Pi[n+1, preTag_1, preTag_2] + transition[preTag_1, preTag_2, final_state]
+			if (preTag_1, preTag_2, final_state) in transition \
+			and (n+1, preTag_1, preTag_2) in Pi:
+				pi = Pi[n+1, preTag_1, preTag_2] + \
+				transition[preTag_1, preTag_2, final_state]
 				if foundgoal == 0 or pi > goal:
 					goal = pi
 					foundgoal = 1
